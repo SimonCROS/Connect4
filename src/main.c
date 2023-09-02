@@ -2,11 +2,12 @@
 
 t_connect4 g_infos;
 
-
-
 bool    win(int player, int pos)
 {
-    
+    return check_vertical(player, pos)
+        || check_horizontal(player, pos)
+        || check_diag_sw_ne(player, pos)
+        || check_diag_nw_se(player, pos);
 }
 
 /// @brief Get the neighbor cell of pos
@@ -14,7 +15,7 @@ bool    win(int player, int pos)
 /// @param dir the direction in which the next cell will be searched
 /// @param res the result of the move
 /// @return true if a result was found, false otherwise
-bool move(int index, t_direction dir, int *res)
+bool    move(int index, t_direction dir, int *res)
 {
     t_pos pos;
     index_to_pos(index, &pos);
@@ -49,6 +50,16 @@ int main(int argc, char const *argv[])
         g_infos.board[i] = '-';
 
     print_board();
+    
+    int read;
+    int ret;
+    while ((ret = ft_atoi_full_read(&read)) != -1)
+    {
+        if (ret == 0)
+            ft_putendl_fd("Error: invalid number", 2);
+        else
+            printf("`%d`\n", read);
+    }
 
     free(g_infos.board);
     return 0;

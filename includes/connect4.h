@@ -31,8 +31,23 @@ typedef enum {
     dir_nw = dir_n & dir_w,
 } t_direction;
 
+int ft_atoi_full_read(int *result);
+
+size_t ft_strlen(const char *s);
+ssize_t ft_putstr(char *s);
+ssize_t	ft_putendl(char *s);
+ssize_t	ft_putchar(char c);
+ssize_t ft_putstr_fd(char *s, int fd);
+ssize_t	ft_putendl_fd(char *s, int fd);
+ssize_t	ft_putchar_fd(char c, int fd);
+
 t_pos npos(int x, int y);
 bool pos_to_index(t_pos pos, int *index);
 bool index_to_pos(int index, t_pos *pos);
+
+bool check_vertical(int player, int pos);
+bool check_horizontal(int player, int pos);
+bool check_diag_sw_ne(int player, int pos);
+bool check_diag_nw_se(int player, int pos);
 
 #endif
