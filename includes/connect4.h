@@ -14,8 +14,8 @@
 typedef struct
 {
     unsigned char   *board;
-    int             width;
-    int             height;
+    int             cols;
+    int             lines;
     int             len;
 }                   t_connect4;
 
@@ -39,6 +39,7 @@ typedef enum {
 } t_direction;
 
 int ft_atoi_full_read(int *result);
+int ft_atoi_full(char const *str, int *result);
 
 size_t ft_strlen(const char *s);
 ssize_t ft_putstr(char *s);

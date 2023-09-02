@@ -6,9 +6,28 @@ int main(int argc, char const *argv[])
 {
     srand(time(NULL));
 
-    g_infos.width = 7;
-    g_infos.height = 6;
-    g_infos.len = g_infos.width * g_infos.height;
+    if (argc != 3)
+    {
+        ft_putendl_fd("Usage: ./connect4 lines columns", 2);
+        return 1;
+    }
+    if (!ft_atoi_full(argv[1], &g_infos.lines) || !ft_atoi_full(argv[2], &g_infos.cols))
+    {
+        ft_putendl_fd("lines and columns must be valid numbers", 2);
+        return 1;
+    }
+    if (g_infos.lines < 6 || g_infos.lines > 50)
+    {
+        ft_putendl_fd("lines must be in range 6-50 (inclusive)", 2);
+        return 1;
+    }
+    if (g_infos.cols < 7 || g_infos.cols > 50)
+    {
+        ft_putendl_fd("columns must be in range 7-50 (inclusive)", 2);
+        return 1;
+    }
+
+    g_infos.len = g_infos.cols * g_infos.lines;
 
     if (!(g_infos.board = malloc(g_infos.len)))
         return 0;

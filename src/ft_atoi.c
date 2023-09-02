@@ -1,6 +1,6 @@
 #include "connect4.h"
 
-int    ft_atoi_full_read(int *result)
+int ft_atoi_full_read(int *result)
 {
     int ret;
     int res;
@@ -23,7 +23,7 @@ int    ft_atoi_full_read(int *result)
     return res > 0 ? 0 : -1; // 0 if not valid int, -1 if EOF or read error
 }
 
-int    ft_atoi_full(char *str, int *result)
+int ft_atoi_full(char const *str, int *result)
 {
     int ret;
 
