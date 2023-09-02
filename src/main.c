@@ -21,7 +21,7 @@ void game()
         }
         else if (ret == 0)
         {
-            ft_putendl_fd("Error: invalid number", 2);
+            ft_putendl_fd("\033[31;1mError: invalid number\033[0m", 2);
             continue;
         }
         else

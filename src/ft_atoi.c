@@ -14,11 +14,11 @@ int ft_atoi_full_read(int *result)
             return (0);
     }
     *result = ret;
-    if ((!c || c == '\n') && res != 0)
+    if (res != 0 && (!c || c == '\n'))
         return 1; // ok
 
-    while (c != '\n' && read(0, &c, 1) > 0) // clean buffer
-        ;
+    while (res > 0 && c != '\n') // clean buffer
+        res = read(0, &c, 1);
 
     return res > 0 ? 0 : -1; // 0 if not valid int, -1 if EOF or read error
 }
