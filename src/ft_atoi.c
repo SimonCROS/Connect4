@@ -2,12 +2,11 @@
 
 int    ft_atoi_full_read(int *result)
 {
-    int    ret;
-
-    ret = 0;
-
+    int ret;
     int res;
     char c;
+
+    ret = 0;
     while ((res = read(0, &c, 1)) > 0 && c >= '0' && c <= '9')
     {
         ret = ret * 10 + (c - '0');
@@ -26,7 +25,7 @@ int    ft_atoi_full_read(int *result)
 
 int    ft_atoi_full(char *str, int *result)
 {
-    int    ret;
+    int ret;
 
     ret = 0;
     while (*str >= '0' && *str <= '9')

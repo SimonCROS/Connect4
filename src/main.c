@@ -2,63 +2,74 @@
 
 t_connect4 g_infos;
 
-bool    win(int player, int pos)
-{
-    return check_vertical(player, pos)
-        || check_horizontal(player, pos)
-        || check_diag_sw_ne(player, pos)
-        || check_diag_nw_se(player, pos);
-}
-
-/// @brief Get the neighbor cell of pos
-/// @param index the start position
-/// @param dir the direction in which the next cell will be searched
-/// @param res the result of the move
-/// @return true if a result was found, false otherwise
-bool    move(int index, t_direction dir, int *res)
-{
-    t_pos pos;
-    index_to_pos(index, &pos);
-
-    if (dir & dir_n)
-        pos.y--;
-    if (dir & dir_e)
-        pos.x++;
-    if (dir & dir_s)
-        pos.y++;
-    if (dir & dir_w)
-        pos.x--;
-
-    return pos_to_index(pos, res);
-}
-
-#include <stdio.h>
-
 int main(int argc, char const *argv[])
 {
-    g_infos.size_x = 7;
-    g_infos.size_y = 6;
-    g_infos.len = g_infos.size_x * g_infos.size_y;
-
     srand(time(NULL));
-    int player = rand() % 2;
+
+    g_infos.width = 7;
+    g_infos.height = 6;
+    g_infos.len = g_infos.width * g_infos.height;
 
     if (!(g_infos.board = malloc(g_infos.len)))
         return 0;
 
-    for (size_t i = 0; i < g_infos.len; i++)
-        g_infos.board[i] = '-';
-
-    print_board();
+    for (int i = 0; i < g_infos.len; i++)
+        g_infos.board[i] = EMPTY;
     
-    int read;
+
+    int player = rand() % 2;
     int ret;
-    while ((ret = ft_atoi_full_read(&read)) != -1)
+    int turn = 0;
+    while (true)
     {
-        if (ret == 0)
+        int column;
+
+        print_board();
+        ft_putstr("Enter a column id: ");
+        ret = ft_atoi_full_read(&column);
+        
+        if (ret == -1)
+        {
+            break;
+        }
+        else if (ret == 0)
+        {
             ft_putendl_fd("Error: invalid number", 2);
+            continue;
+        }
         else
-            printf("`%d`\n", read);
+        {
+            int index = bottom_index_of_column(column - 1);
+            if (index == COLUMN_UNKNOWN)
+            {
+                ft_putendl_fd("\033[31;1mError: invalid column\033[0m", 2);
+                continue;
+            }
+            if (index == COLUMN_FULL)
+            {
+                ft_putendl_fd("\033[31mError: column is full\033[0m", 2);
+                continue;
+            }
+
+            char player_token = player ? PLAYER1 : PLAYER2;
+            g_infos.board[index] = player_token;
+
+            if (check_win(player_token, index))
+            {
+                ft_putendl_fd("\033[32mGame finished, one winner, one looser, GG everyone.\033[0m", 2);
+                print_board();
+                return 0;
+            }
+            if (turn == g_infos.len - 1)
+            {
+                ft_putendl_fd("\033[32mGame finished, no winner, no looser, GG everyone.\033[0m", 2);
+                print_board();
+                return 0;
+            }
+        }
+
+        player = !player;
+        turn++;
     }
 
     free(g_infos.board);

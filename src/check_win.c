@@ -2,44 +2,60 @@
 
 extern t_connect4 g_infos;
 
-bool    check_vertical(int player, int pos)
+int count_in_direction(char player, int index, t_direction direction)
+{
+    int counter = 0;
+    int new_index = index;
+    while (move(new_index, direction, &new_index))
+    {
+        if (g_infos.board[new_index] != player)
+            break;
+        counter++;
+    }
+
+    return counter;
+}
+
+bool check_vertical(char player, int index)
 {
     int counter = 1;
-
-    for (int new_pos = pos; move(new_pos, dir_s, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
+    
+    counter += count_in_direction(player, index, dir_n);
+    counter += count_in_direction(player, index, dir_s);
     return counter >= 4;
 }
 
-bool    check_horizontal(int player, int pos)
+bool check_horizontal(char player, int index)
 {
     int counter = 1;
 
-    for (int new_pos = pos; move(new_pos, dir_e, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
-    for (int new_pos = pos; move(new_pos, dir_w, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
+    counter += count_in_direction(player, index, dir_e);
+    counter += count_in_direction(player, index, dir_w);
     return counter >= 4;
 }
 
-bool    check_diag_sw_ne(int player, int pos)
+bool check_diag_sw_ne(char player, int index)
 {
     int counter = 1;
 
-    for (int new_pos = pos; move(new_pos, dir_sw, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
-    for (int new_pos = pos; move(new_pos, dir_ne, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
+    counter += count_in_direction(player, index, dir_sw);
+    counter += count_in_direction(player, index, dir_ne);
     return counter >= 4;
 }
 
-bool    check_diag_nw_se(int player, int pos)
+bool check_diag_nw_se(char player, int index)
 {
     int counter = 1;
 
-    for (int new_pos = pos; move(new_pos, dir_nw, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
-    for (int new_pos = pos; move(new_pos, dir_se, &new_pos) && g_infos.board[new_pos] == player;)
-        counter++;
+    counter += count_in_direction(player, index, dir_nw);
+    counter += count_in_direction(player, index, dir_se);
     return counter >= 4;
+}
+
+bool check_win(char player, int index)
+{
+    return check_vertical(player, index)
+        || check_horizontal(player, index)
+        || check_diag_sw_ne(player, index)
+        || check_diag_nw_se(player, index);
 }
