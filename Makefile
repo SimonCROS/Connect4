@@ -2,10 +2,14 @@
 
 NAME				:= connect4
 
-all:
-	cc main.c -Wall -Wextra -Werror -o connect4
+override SRCS		:=					\
+		src/main.c						\
+		src/utils.c						\
 
-noerr:
-	cc main.c -Wall -Wextra -o connect4
+all:
+	cc $(SRCS) -Wall -Wextra -Werror -Iincludes -o connect4
+
+debug:
+	cc $(SRCS) -Wall -Wextra -Iincludes -fsanitize=address -g3 -o connect4
 
 .PHONY: all
