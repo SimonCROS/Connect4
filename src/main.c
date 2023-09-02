@@ -2,40 +2,8 @@
 
 t_connect4 g_infos;
 
-int main(int argc, char const *argv[])
+void game()
 {
-    srand(time(NULL));
-
-    if (argc != 3)
-    {
-        ft_putendl_fd("Usage: ./connect4 lines columns", 2);
-        return 1;
-    }
-    if (!ft_atoi_full(argv[1], &g_infos.lines) || !ft_atoi_full(argv[2], &g_infos.cols))
-    {
-        ft_putendl_fd("lines and columns must be valid numbers", 2);
-        return 1;
-    }
-    if (g_infos.lines < 6 || g_infos.lines > 50)
-    {
-        ft_putendl_fd("lines must be in range 6-50 (inclusive)", 2);
-        return 1;
-    }
-    if (g_infos.cols < 7 || g_infos.cols > 50)
-    {
-        ft_putendl_fd("columns must be in range 7-50 (inclusive)", 2);
-        return 1;
-    }
-
-    g_infos.len = g_infos.cols * g_infos.lines;
-
-    if (!(g_infos.board = malloc(g_infos.len)))
-        return 0;
-
-    for (int i = 0; i < g_infos.len; i++)
-        g_infos.board[i] = EMPTY;
-    
-
     int player = rand() % 2;
     int ret;
     int turn = 0;
@@ -77,19 +45,55 @@ int main(int argc, char const *argv[])
             {
                 ft_putendl_fd("\033[32mGame finished, one winner, one looser, GG everyone.\033[0m", 2);
                 print_board();
-                return 0;
+                return;
             }
             if (turn == g_infos.len - 1)
             {
                 ft_putendl_fd("\033[32mGame finished, no winner, no looser, GG everyone.\033[0m", 2);
                 print_board();
-                return 0;
+                return;
             }
         }
 
         player = !player;
         turn++;
     }
+}
+
+int main(int argc, char const *argv[])
+{
+    srand(time(NULL));
+
+    if (argc != 3)
+    {
+        ft_putendl_fd("Usage: ./connect4 lines columns", 2);
+        return 1;
+    }
+    if (!ft_atoi_full(argv[1], &g_infos.lines) || !ft_atoi_full(argv[2], &g_infos.cols))
+    {
+        ft_putendl_fd("lines and columns must be valid numbers", 2);
+        return 1;
+    }
+    if (g_infos.lines < 6 || g_infos.lines > 50)
+    {
+        ft_putendl_fd("lines must be in range 6-50 (inclusive)", 2);
+        return 1;
+    }
+    if (g_infos.cols < 7 || g_infos.cols > 50)
+    {
+        ft_putendl_fd("columns must be in range 7-50 (inclusive)", 2);
+        return 1;
+    }
+
+    g_infos.len = g_infos.cols * g_infos.lines;
+
+    if (!(g_infos.board = malloc(g_infos.len)))
+        return 0;
+
+    for (int i = 0; i < g_infos.len; i++)
+        g_infos.board[i] = EMPTY;
+    
+    game();
 
     free(g_infos.board);
     return 0;
