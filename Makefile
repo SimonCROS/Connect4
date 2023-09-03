@@ -2,7 +2,7 @@
 
 NAME				:= connect4
 
-override SRCS	   :=					\
+override SRCS		:=					\
 		src/main.c						\
 		src/check_win.c					\
 		src/utils.c						\
