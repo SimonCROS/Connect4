@@ -5,9 +5,6 @@
 # include <stdlib.h>
 # include <time.h>
 
-# define EMPTY '-'
-# define PLAYER1 'o'
-# define PLAYER2 'x'
 # define COLUMN_UNKNOWN -1
 # define COLUMN_FULL -2
 
@@ -28,15 +25,22 @@ typedef struct
 typedef enum { false, true } bool;
 
 typedef enum {
-    dir_n = 1 << 0,
-    dir_e = 1 << 1,
-    dir_s = 1 << 2,
-    dir_w = 1 << 3,
-    dir_ne = dir_n | dir_e,
-    dir_se = dir_s | dir_e,
-    dir_sw = dir_s | dir_w,
-    dir_nw = dir_n | dir_w,
+    DIR_N = 1 << 0,
+    DIR_E = 1 << 1,
+    DIR_S = 1 << 2,
+    DIR_W = 1 << 3,
+    DIR_NE = DIR_N | DIR_E,
+    DIR_SE = DIR_S | DIR_E,
+    DIR_SW = DIR_S | DIR_W,
+    DIR_NW = DIR_N | DIR_W,
 } t_direction;
+
+typedef enum {
+    EMPTY = 0,
+    PLAYER1 = 1 << 1,
+    PLAYER2 = 1 << 2,
+    SELECTED = 1 << 3,
+} t_cell_flags;
 
 int ft_atoi_full_read(int *result);
 int ft_atoi_full(char const *str, int *result);

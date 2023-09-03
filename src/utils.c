@@ -12,13 +12,13 @@ bool move(int index, t_direction dir, int *res)
     t_pos pos;
     index_to_pos(index, &pos);
 
-    if (dir & dir_n)
+    if (dir & DIR_N)
         pos.y--;
-    if (dir & dir_e)
+    if (dir & DIR_E)
         pos.x++;
-    if (dir & dir_s)
+    if (dir & DIR_S)
         pos.y++;
-    if (dir & dir_w)
+    if (dir & DIR_W)
         pos.x--;
 
     return pos_to_index(pos, res);
@@ -65,8 +65,14 @@ void print_board()
 {
     for (int y = g_infos.lines - 1; y >= 0; y--)
     {
-        write(0, "|", 1);
-        write(0, g_infos.board + (y * g_infos.cols), g_infos.cols);
-        write(0, "|\n", 2);
+        for (int x = 0; x < g_infos.cols; x++)
+        {
+            int index;
+            pos_to_index(npos(x, y), &index);
+
+            ft_putchar('|');
+            ft_putchar(g_infos.board[index]);
+        }
+        ft_putendl("|");
     }
 }
