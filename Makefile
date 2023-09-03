@@ -11,6 +11,7 @@ override SRCS	   :=					\
 		src/ft_putstr.c					\
 		src/ft_putendl.c				\
 		src/ft_putchar.c				\
+		src/ft_putnbr.c					\
 
 all:
 	cc $(SRCS) -Wall -Wextra -Werror -Iincludes -o connect4
