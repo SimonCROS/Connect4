@@ -32,6 +32,5 @@ int player_turn(int token)
         return -1;
     }
 
-    g_infos.board[index] = token;
     return index;
 }

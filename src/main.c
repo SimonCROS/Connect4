@@ -4,17 +4,24 @@ t_connect4 g_infos;
 
 void game()
 {
-    int player = rand() % 2 == 0 ? PLAYER1 : PLAYER2;
+    int token = rand() % 2 == 0 ? PLAYER1 : PLAYER2;
     int turn = 0;
     while (true)
     {
-        int index = player_turn(player);
+        int index;
+
+        if (token == PLAYER1)
+            index = player_turn(token);
+        else
+            index = ai_turn(token);
+
         if (index == -2)
             break;
         if (index == -1)
             continue;
 
-        if (check_win(player, index))
+        g_infos.board[index] = token;
+        if (check_win(token, index))
         {
             print_status("\033[32mGame finished, one winner, one looser, GG everyone.\033[0m");
             print_board();
@@ -29,10 +36,10 @@ void game()
             return;
         }
 
-        if (player == PLAYER1)
-            player = PLAYER2;
+        if (token == PLAYER1)
+            token = PLAYER2;
         else
-            player = PLAYER1;
+            token = PLAYER1;
 
         turn++;
         print_status("\33[2K\r");

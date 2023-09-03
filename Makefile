@@ -12,6 +12,7 @@ override SRCS	   :=					\
 		src/ft_putendl.c				\
 		src/ft_putchar.c				\
 		src/ft_putnbr.c					\
+		src/ai.c						\
 		src/player.c					\
 
 all:
