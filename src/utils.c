@@ -65,13 +65,22 @@ void print_board()
 {
     for (int y = g_infos.lines - 1; y >= 0; y--)
     {
+        ft_putstr("\33[2K\r");
         for (int x = 0; x < g_infos.cols; x++)
         {
             int index;
             pos_to_index(npos(x, y), &index);
 
-            ft_putchar('|');
-            ft_putchar(g_infos.board[index]);
+            if (g_infos.board[index] == (SELECTED | PLAYER1))
+                ft_putstr("|\033[31;1;4m#\033[0m");
+            else if (g_infos.board[index] == (SELECTED | PLAYER2))
+                ft_putstr("|\033[33;1;4m#\033[0m");
+            else if (g_infos.board[index] & PLAYER1)
+                ft_putstr("|\033[31m#\033[0m");
+            else if (g_infos.board[index] & PLAYER2)
+                ft_putstr("|\033[33m#\033[0m");
+            else
+                ft_putstr("|-");
         }
         ft_putendl("|");
     }

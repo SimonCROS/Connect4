@@ -58,10 +58,6 @@ bool pos_to_index(t_pos pos, int *index);
 bool index_to_pos(int index, t_pos *pos);
 
 bool check_win(char player, int pos);
-bool check_vertical(char player, int pos);
-bool check_horizontal(char player, int pos);
-bool check_diag_sw_ne(char player, int pos);
-bool check_diag_nw_se(char player, int pos);
 
 bool move(int index, t_direction dir, int *res);
 int bottom_index_of_column(int x);
