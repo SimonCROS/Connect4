@@ -25,54 +25,27 @@ void reset_selection()
         g_infos.board[i] &= ~SELECTED;
 }
 
-bool check_vertical(char player, int index)
-{
-    int counter = 1;
-    
-    counter += check_in_direction(player, index, DIR_N);
-    counter += check_in_direction(player, index, DIR_S);
-    return counter >= 4;
-}
-
-bool check_horizontal(char player, int index)
+bool check_line(char player, int index, t_direction d1, t_direction d2)
 {
     int counter = 1;
 
-    counter += check_in_direction(player, index, DIR_E);
-    counter += check_in_direction(player, index, DIR_W);
-    return counter >= 4;
-}
-
-bool check_diag_sw_ne(char player, int index)
-{
-    int counter = 1;
-
-    counter += check_in_direction(player, index, DIR_SW);
-    counter += check_in_direction(player, index, DIR_NE);
-    return counter >= 4;
-}
-
-bool check_diag_nw_se(char player, int index)
-{
-    int counter = 1;
-
-    counter += check_in_direction(player, index, DIR_NW);
-    counter += check_in_direction(player, index, DIR_SE);
+    counter += check_in_direction(player, index, d1);
+    counter += check_in_direction(player, index, d2);
     return counter >= 4;
 }
 
 bool check_win(char player, int index)
 {
-    if (check_vertical(player, index))
+    if (check_line(player, index, DIR_N, DIR_S))
         return true;
     reset_selection();
-    if (check_horizontal(player, index))
+    if (check_line(player, index, DIR_E, DIR_W))
         return true;
     reset_selection();
-    if (check_diag_sw_ne(player, index))
+    if (check_line(player, index, DIR_SW, DIR_NE))
         return true;
     reset_selection();
-    if (check_diag_nw_se(player, index))
+    if (check_line(player, index, DIR_NW, DIR_SE))
         return true;
     reset_selection();
     return false;

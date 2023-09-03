@@ -2,56 +2,38 @@
 
 extern t_connect4 g_infos;
 
-
-int check_higher_in_direction(char player, int index, t_direction direction)
+int check_higher_in_direction(char player, int index, t_direction direction, int *available)
 {
+    bool aligned = true;
     int counter = 0;
     int new_index = index;
 
     while (move(new_index, direction, &new_index))
     {
         if (g_infos.board[new_index] != player)
-            break;
-        counter++;
+        {
+            if (g_infos.board[new_index] == EMPTY)
+                aligned = false;
+            else
+                break;
+        }
+
+        if (aligned)
+            counter++;
+        (*available)++;
     }
 
     return counter;
 }
 
-int check_higher_vertical(char player, int index)
+int check_higher_line(char player, int index, t_direction d1, t_direction d2)
 {
-    int counter = 1;
-    
-    counter += check_higher_in_direction(player, index, DIR_N);
-    counter += check_higher_in_direction(player, index, DIR_S);
-    return counter;
-}
-
-int check_higher_horizontal(char player, int index)
-{
+    int available = 1;
     int counter = 1;
 
-    counter += check_higher_in_direction(player, index, DIR_E);
-    counter += check_higher_in_direction(player, index, DIR_W);
-    return counter;
-}
-
-int check_higher_diag_sw_ne(char player, int index)
-{
-    int counter = 1;
-
-    counter += check_higher_in_direction(player, index, DIR_SW);
-    counter += check_higher_in_direction(player, index, DIR_NE);
-    return counter;
-}
-
-int check_higher_diag_nw_se(char player, int index)
-{
-    int counter = 1;
-
-    counter += check_higher_in_direction(player, index, DIR_NW);
-    counter += check_higher_in_direction(player, index, DIR_SE);
-    return counter;
+    counter += check_higher_in_direction(player, index, d1, &available);
+    counter += check_higher_in_direction(player, index, d2, &available);
+    return available >= 4 ? counter : 0;
 }
 
 int check_higher(char player, int index)
@@ -59,13 +41,13 @@ int check_higher(char player, int index)
     int higher = 0;
     int current = 0;
 
-    higher = check_higher_vertical(player, index);
-
-    current = check_higher_horizontal(player, index);
+    current = check_higher_line(player, index, DIR_N, DIR_S);
     higher = current > higher ? current : higher;
-    current = check_higher_diag_sw_ne(player, index);
+    current = check_higher_line(player, index, DIR_E, DIR_W);
     higher = current > higher ? current : higher;
-    current = check_higher_diag_nw_se(player, index);
+    current = check_higher_line(player, index, DIR_SW, DIR_NE);
+    higher = current > higher ? current : higher;
+    current = check_higher_line(player, index, DIR_NW, DIR_SE);
     higher = current > higher ? current : higher;
 
     return higher;
@@ -73,9 +55,6 @@ int check_higher(char player, int index)
 
 int ai_turn(int token, int player_token)
 {
-    print_board();
-    ft_putendl("\33[2K\r");
-
     int higher_player_val = -1;
     int higher_player_col = -1;
     int higher_player_index = -1;
@@ -114,6 +93,8 @@ int ai_turn(int token, int player_token)
             }
         }
     }
+    print_board();
+    ft_putendl("\33[2K\r");
 
     if (higher_ai_col == -1) // should never happen
         return -1;
