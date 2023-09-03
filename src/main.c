@@ -2,67 +2,31 @@
 
 t_connect4 g_infos;
 
-void print_status(char *message)
-{
-    ft_putstr("\33[2K\r");
-    ft_putendl(message);
-    ft_putstr("\033[");
-    ft_putnbr(g_infos.lines + 2);
-    ft_putchar('A');
-}
-
 void game()
 {
     int player = rand() % 2 == 0 ? PLAYER1 : PLAYER2;
-    int ret;
     int turn = 0;
     while (true)
     {
-        int column;
-
-        print_board();
-        ft_putstr("\33[2K\rEnter a column id: ");
-        ret = ft_atoi_full_read(&column);
-        
-        if (ret == -1)
-        {
+        int index = player_turn(player);
+        if (index == -2)
             break;
-        }
-        else if (ret == 0)
-        {
-            print_status("\033[31;1mError: invalid number\033[0m");
+        if (index == -1)
             continue;
-        }
-        else
+
+        if (check_win(player, index))
         {
-            int index = bottom_index_of_column(column - 1);
-            if (index == COLUMN_UNKNOWN)
-            {
-                print_status("\033[31;1mError: invalid column\033[0m");
-                continue;
-            }
-            if (index == COLUMN_FULL)
-            {
-                print_status("\033[31mError: column is full\033[0m");
-                continue;
-            }
-
-            g_infos.board[index] = player;
-
-            if (check_win(player, index))
-            {
-                print_status("\033[32mGame finished, one winner, one looser, GG everyone.\033[0m");
-                print_board();
-                ft_putstr("\n\n");
-                return;
-            }
-            if (turn == g_infos.len - 1)
-            {
-                print_status("\033[32mGame finished, no winner, no looser, GG everyone.\033[0m");
-                print_board();
-                ft_putstr("\n\n");
-                return;
-            }
+            print_status("\033[32mGame finished, one winner, one looser, GG everyone.\033[0m");
+            print_board();
+            ft_putstr("\n\n");
+            return;
+        }
+        if (turn == g_infos.len - 1)
+        {
+            print_status("\033[32mGame finished, no winner, no looser, GG everyone.\033[0m");
+            print_board();
+            ft_putstr("\n\n");
+            return;
         }
 
         if (player == PLAYER1)

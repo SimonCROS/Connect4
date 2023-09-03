@@ -85,3 +85,12 @@ void print_board()
         ft_putendl("|");
     }
 }
+
+void print_status(char *message)
+{
+    ft_putstr("\33[2K\r");
+    ft_putendl(message);
+    ft_putstr("\033[");
+    ft_putnbr(g_infos.lines + 2);
+    ft_putchar('A');
+}
