@@ -55,6 +55,9 @@ int check_higher(char player, int index)
 
 int ai_turn(int token, int player_token)
 {
+    print_board();
+    ft_putendl("\33[2K\r");
+    
     int higher_player_val = -1;
     int higher_player_col = -1;
     int higher_player_index = -1;
@@ -93,8 +96,6 @@ int ai_turn(int token, int player_token)
             }
         }
     }
-    print_board();
-    ft_putendl("\33[2K\r");
 
     if (higher_ai_col == -1) // should never happen
         return -1;
