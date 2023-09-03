@@ -73,8 +73,8 @@ int check_higher(char player, int index)
 
 int ai_turn(int token, int player_token)
 {
-    // print_board();
-    // ft_putendl("\33[2K\rAI is playing...");
+    print_board();
+    ft_putendl("\33[2K\r");
 
     int higher_player_val = -1;
     int higher_player_col = -1;
@@ -82,7 +82,7 @@ int ai_turn(int token, int player_token)
     for (int x = 0; x < g_infos.cols; x++)
     {
         int index = bottom_index_of_column(x);
-        if (index > 0)
+        if (index >= 0)
         {
             int value = check_higher(player_token, index);
             if (value > higher_player_val)
@@ -103,7 +103,7 @@ int ai_turn(int token, int player_token)
     for (int x = 0; x < g_infos.cols; x++)
     {
         int index = bottom_index_of_column(x);
-        if (index > 0)
+        if (index >= 0)
         {
             int value = check_higher(token, index);
             if (value > higher_ai_val)
@@ -115,14 +115,10 @@ int ai_turn(int token, int player_token)
         }
     }
 
-    printf("\33[2K\r---\n\33[2K\ria max: %d\n\33[2K\ria col:%d\n\33[2K\rpl max:%d\n\33[2K\rpl col:%d\n", higher_ai_val, higher_ai_col, higher_player_val, higher_player_col);
-    print_board();
-    ft_putendl("\33[2K\rAI is playing...");
-
     if (higher_ai_col == -1) // should never happen
         return -1;
 
-    if (higher_ai_val == 3)
+    if (higher_ai_val == 4)
         return higher_ai_index;
 
     if (higher_player_val > 2)

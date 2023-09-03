@@ -6,6 +6,7 @@ void game()
 {
     int token = rand() % 2 == 0 ? PLAYER1 : PLAYER2;
     int turn = 0;
+    ft_putendl("\033[31mYOU\033[0m    vs    \033[33mAI\033[0m");
     while (true)
     {
         int index;
@@ -23,7 +24,10 @@ void game()
         g_infos.board[index] = token;
         if (check_win(token, index))
         {
-            print_status("\033[32mGame finished, one winner, one looser, GG everyone.\033[0m");
+            if (token == PLAYER1)
+                print_status("\033[32mGame finished, one \033[31mwinner\033[32m, one \033[33mlooser\033[32m, GG everyone.\033[0m");
+            else
+                print_status("\033[32mGame finished, one \033[33mwinner\033[32m, one \033[31mlooser\033[32m (it's you lol), GG everyone.\033[0m");
             print_board();
             ft_putstr("\n\n");
             return;
