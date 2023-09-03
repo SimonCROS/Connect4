@@ -66,7 +66,7 @@ int bottom_index_of_column(int x);
 void print_board();
 void print_status(char *message);
 
-int ai_turn(int token);
-int player_turn(int token);
+int ai_turn(int token, int player_token);
+int player_turn();
 
 #endif

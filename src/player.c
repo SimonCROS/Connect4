@@ -2,7 +2,7 @@
 
 extern t_connect4 g_infos;
 
-int player_turn(int token)
+int player_turn()
 {
     int column;
     int ret;

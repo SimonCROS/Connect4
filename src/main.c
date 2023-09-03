@@ -11,9 +11,9 @@ void game()
         int index;
 
         if (token == PLAYER1)
-            index = player_turn(token);
+            index = player_turn();
         else
-            index = ai_turn(token);
+            index = ai_turn(token, PLAYER1);
 
         if (index == -2)
             break;

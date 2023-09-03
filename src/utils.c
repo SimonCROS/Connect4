@@ -26,7 +26,7 @@ bool move(int index, t_direction dir, int *res)
 
 /// @brief Returns the lowest cell avaliable in the column
 /// @param x the index of the column
-/// @return the index of the lowest cell avaliable or -1 if column is full
+/// @return the index of the lowest cell avaliable, -1 if column is full or -2 if column is unknown
 int bottom_index_of_column(int x)
 {
     for (int y = 0; y < g_infos.lines; y++)
