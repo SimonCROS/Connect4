@@ -11,7 +11,7 @@ int ft_atoi_full_read(int *result)
     {
         ret = ret * 10 + (c - '0');
         if (ret < 0)
-            return (0);
+            break;
     }
     *result = ret;
     if (res != 0 && (!c || c == '\n'))
